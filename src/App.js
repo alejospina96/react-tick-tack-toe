@@ -33,15 +33,13 @@ class App extends Component {
         squares[i] = this.state.xIsNext ? Play.X : Play.O;
         this.setState({
             history: history.concat([{
-                squares: squares,
-                win:this.minimax.countWins(squares),
-                lose:this.minimax.countLoses(squares),
-                tie:this.minimax.countTies(squares)
+                squares: squares
             }]),
             stepNumber: history.length,
             xIsNext: !this.state.xIsNext,
         });
-        this.minimax.goTo(squares)
+        this.minimax.goTo(squares);
+        console.log(this.minimax.giveNext());
     }
     jumpTo(step) {
         this.setState({
@@ -73,11 +71,6 @@ class App extends Component {
 
         return (
               <div className="game">
-                  <div>
-                      possibilities to lose {current.lose}<br/>
-                      possibilities to win {current.win}<br/>
-                      possibilities to tie {current.tie}
-                  </div>
                   <div className="game-board">
                       <Board
                           squares={current.squares}

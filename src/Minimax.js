@@ -2,43 +2,37 @@ export class Minimax {
     currentState:Play;
     constructor(squares:String[]){
         this.currentState = new Play(squares);
-        this.currentState.calculateValue();
+        // this.currentState.calculateValue();
     }
     goTo(nextSquares) {
         this.currentState = this.currentState.possiblePlays.find(value => value.squares.equals(nextSquares));
+        console.log(this.currentState.calculateValue())
     }
-    giveNext(squares:[]):number {
-
-    }
-    countLoses(){
-        const loses = this.currentState.countLoses();
-        console.log("found "+loses+" loses");
-        return loses;
-    }
-    countWins(){
-        const wins = this.currentState.countWins();
-        console.log("found "+wins+" wins");
-        return wins;
-    }
-
-
-    countTies(){
-        const ties = this.currentState.countTies();
-        console.log("found "+ties+" ties");
-        return ties;
+    giveNext():number {
+        console.log(this.currentState.possiblePlays);
+        let index = -1;
+        let max = null;
+        if(this.currentState.possiblePlays.length>0){
+            for (let i = 0; i < this.currentState.possiblePlays.length; i++) {
+                let val = this.currentState.possiblePlays[i].calculateValue()
+                if(max ===null ||val<max){
+                    max = val;
+                    index = i;
+                }
+            }
+        }
+        return index;
     }
 }
 export class Play {
     static X ='X';
     static O = 'O';
+    static TIE = '.';
     squares:[] = Array(9);
-    possiblePlays:Play[];
+    possiblePlays:Play[]=[];
     currentPlayer:String;
     nextPlayer:String;
-    value:number;
     constructor(squares:String[], fillVal:String=Play.X) {
-        // console.log('building a play from ');
-        // console.log(squares);
         this.squares = squares;
         this.currentPlayer = fillVal;
         if(fillVal===Play.X){
@@ -46,81 +40,23 @@ export class Play {
         }else{
             this.nextPlayer = Play.X;
         }
-        if(this.notEnd() && !Play.calculateWinner(this.squares)){
-            this.possiblePlays = this.buildPossiblePlays();
-        }
-        // console.log(this.possiblePlays)
+        this.buildPossiblePlays();
     }
-    countLoses(){
-        if(this.possiblePlays){
-            return this.possiblePlays
-                .map(value1 => {
-                    if(value1.value===-1){
-                        return 1;
-                    }
-                    return value1.countLoses();
-                })
-                .reduce((previousValue, currentValue) => previousValue+currentValue);
-        }
-        return 0;
-
-    }
-    countWins(){
-        if(this.possiblePlays){
-            return this.possiblePlays
-                .map(value1 => {
-                    if(value1.value===1){
-                        return 1;
-                    }
-                    return value1.countWins();
-                })
-                .reduce((previousValue, currentValue) => previousValue+currentValue);
-        }
-        return 0;
-    }
-
-
-    countTies(){
-        if(this.possiblePlays){
-            return this.possiblePlays
-                .map(value1 => {
-                    if(value1.value===-0){
-                        return 1;
-                    }return value1.countTies();
-                })
-                .reduce((previousValue, currentValue) => previousValue+currentValue);
-        }
-        return 0;
-    }
-
-    notEnd() :boolean{
-        return this.squares.filter(value => !value).length>0;
-    }
-    calculateValue() :number{
-        const winner = Play.calculateWinner(this.squares);
-        if(winner===Play.X) {
-            this.value = -1;
-            return -1;
-        }else if(winner===Play.O){
-            this.value = 1;
+    calculateValue(){
+        let winner = Play.calculateWinner(this.squares);
+        if(winner===Play.O){
             return 1;
-        }else if(this.end()){
-            this.value = 0;
+        }else if(winner===Play.X){
+            return -1;
+        }else if(winner===Play.TIE){
             return 0;
-        } else if(this.possiblePlays){
-            const values=this.possiblePlays
-                .filter(map=>map)
-                .map(play=>play.calculateValue());
-            if(values.find(winner=>winner===1)) {
-                return 1;
-            }else if(values.find(winner=>winner===0)) {
-                return 0;
-            } else {
-                return -1;
-            }
+        }else {
+            return this.possiblePlays
+                .map(value => value.calculateValue())
+                .reduce((previousValue, currentValue) => previousValue+currentValue);
         }
     }
-    static calculateWinner(squares):string=>Play.O|Play.X|null {
+    static calculateWinner(squares):string{
         const lines = [
             [0, 1, 2],
             [3, 4, 5],
@@ -134,25 +70,26 @@ export class Play {
         for (let i = 0; i < lines.length; i++) {
             const [a, b, c] = lines[i];
             if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
-                if(squares[a]===Play.O){
-                   return Play.O;
-                }
-                return Play.X;
+                return squares[a];
             }
         }
-        return null;
+        if(Play.end(squares)){
+            return Play.TIE;
+        }else {
+            return null;
+        }
+    }
+    static end(squares):boolean {
+        return squares.filter(value => value===null).length===0;
     }
     buildPossiblePlays():Play[]{
-        return this.squares.map((square, i) => {
-            let newPlay = this.squares.slice();
-            if (!square) {
-                newPlay[i] = this.currentPlayer;
-                return new Play(newPlay, this.nextPlayer);
-            }return null;
-        }).filter(val => val);
+        for (let i = 0; i < this.squares.length; i++) {
+            if(!this.squares[i]){
+                let newSquares = this.squares.slice();
+                newSquares.splice(i,1,this.currentPlayer);
+                this.possiblePlays.push(new Play(newSquares,this.nextPlayer));
+            }
+        }
     }
 
-    end() {
-        return this.squares.filter(value => value===null).length===0;
-    }
 }
