@@ -39,7 +39,6 @@ class App extends Component {
             xIsNext: !this.state.xIsNext,
         });
         this.minimax.goTo(squares);
-        console.log(this.minimax.giveNext());
     }
     jumpTo(step) {
         this.setState({
@@ -74,7 +73,14 @@ class App extends Component {
                   <div className="game-board">
                       <Board
                           squares={current.squares}
-                          onClick={(i) => this.handleClick(i)}
+                          onClick={(i) => {
+                              this.handleClick(i);
+                              if(this.minimax.currentState.currentPlayer===Play.O) {
+                                  let val = this.minimax.giveNext();
+                                  console.log(this.minimax.giveNext())
+                                  this.handleClick(val);
+                              }
+                          }}
                       />
                   </div>
                   <div className="game-info">
@@ -109,6 +115,7 @@ class Board extends Component{
     }
     renderSquare(i) {
         return <Square
+            id={i}
             value={this.props.squares[i]}
             onClick={() => this.props.onClick(i)}
         />;

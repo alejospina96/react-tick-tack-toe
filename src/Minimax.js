@@ -2,11 +2,12 @@ export class Minimax {
     currentState:Play;
     constructor(squares:String[]){
         this.currentState = new Play(squares);
-        // this.currentState.calculateValue();
     }
     goTo(nextSquares) {
         this.currentState = this.currentState.possiblePlays.find(value => value.squares.equals(nextSquares));
-        console.log(this.currentState.calculateValue())
+        if(this.currentState){
+            console.log(this.currentState.calculateValue())
+        }
     }
     giveNext():number {
         console.log(this.currentState.possiblePlays);
@@ -15,13 +16,15 @@ export class Minimax {
         if(this.currentState.possiblePlays.length>0){
             for (let i = 0; i < this.currentState.possiblePlays.length; i++) {
                 let val = this.currentState.possiblePlays[i].calculateValue()
-                if(max ===null ||val<max){
+                if(max ===null ||val>max){
                     max = val;
                     index = i;
                 }
             }
         }
-        return index;
+        let val = this.currentState.findChange(index);
+        console.log(val);
+        return val;
     }
 }
 export class Play {
@@ -30,8 +33,18 @@ export class Play {
     static TIE = '.';
     squares:[] = Array(9);
     possiblePlays:Play[]=[];
+    value: number = 0;
     currentPlayer:String;
     nextPlayer:String;
+    findChange(index) :number{
+        console.log("finding the "+index);
+        for(let i=0; i<this.possiblePlays.length;i++) {
+            if(this.squares[i]!==this.possiblePlays[index][i]){
+                return i;
+            }
+        }
+        return -1;
+    }
     constructor(squares:String[], fillVal:String=Play.X) {
         this.squares = squares;
         this.currentPlayer = fillVal;
@@ -40,23 +53,27 @@ export class Play {
         }else{
             this.nextPlayer = Play.X;
         }
-        this.buildPossiblePlays();
+        this.possiblePlays = this.buildPossiblePlays();
     }
-    calculateValue(){
+    calculateValue() {
         let winner = Play.calculateWinner(this.squares);
         if(winner===Play.O){
+            this.value = 1;
             return 1;
         }else if(winner===Play.X){
+            this.value = -1;
             return -1;
-        }else if(winner===Play.TIE){
-            return 0;
+        }else if(winner===Play.TIE) {
+            return 1;
         }else {
-            return this.possiblePlays
+            const val = this.possiblePlays
                 .map(value => value.calculateValue())
                 .reduce((previousValue, currentValue) => previousValue+currentValue);
+            this.value = val;
+            return val;
         }
     }
-    static calculateWinner(squares):string{
+    static calculateWinner(squares):string {
         const lines = [
             [0, 1, 2],
             [3, 4, 5],
@@ -82,14 +99,18 @@ export class Play {
     static end(squares):boolean {
         return squares.filter(value => value===null).length===0;
     }
-    buildPossiblePlays():Play[]{
-        for (let i = 0; i < this.squares.length; i++) {
-            if(!this.squares[i]){
-                let newSquares = this.squares.slice();
-                newSquares.splice(i,1,this.currentPlayer);
-                this.possiblePlays.push(new Play(newSquares,this.nextPlayer));
+    buildPossiblePlays():Play[] {
+        let plays = [];
+        if(!Play.calculateWinner(this.squares)) {
+            for (let i = 0; i < this.squares.length; i++) {
+                if(!this.squares[i]) {
+                    let newSquares = this.squares.slice();
+                    newSquares.splice(i,1,this.currentPlayer);
+                    plays.push(new Play(newSquares,this.nextPlayer));
+                }
             }
         }
+        return plays;
     }
 
 }
