@@ -4,47 +4,47 @@ export class Minimax {
         this.currentState = new Play(squares);
     }
     goTo(nextSquares) {
-        this.currentState = this.currentState.possiblePlays.find(value => value.squares.equals(nextSquares));
-        if(this.currentState){
-            console.log(this.currentState.calculateValue())
+        let state = this.currentState.possiblePlays.find(value => value.squares.equals(nextSquares));
+        if (!state) {
+            state = this.currentState.possiblePlays.find(value => value.possiblePlays.find(value1 => value1.squares.equals(nextSquares)));
         }
+        this.currentState = state;
     }
-    giveNext():number {
-        console.log(this.currentState.possiblePlays);
+
+    giveNext(squares): [] {
+        console.log(this.currentState);
+        this.goTo(squares);
+        console.log(this.currentState);
+        // console.log(this.currentState.possiblePlays);
         let index = -1;
         let max = null;
         if(this.currentState.possiblePlays.length>0){
             for (let i = 0; i < this.currentState.possiblePlays.length; i++) {
-                let val = this.currentState.possiblePlays[i].calculateValue()
-                if(max ===null ||val>max){
+                if (Play.calculateWinner(this.currentState.possiblePlays[i].squares)) {
+                    return this.currentState.possiblePlays[i].squares;
+                }
+                let val = this.currentState.possiblePlays[i].calculateValue();
+                if (max === null || val > max) {
                     max = val;
                     index = i;
                 }
             }
+            console.log(index);
+            console.log(this.currentState.possiblePlays[index].squares);
+            return this.currentState.possiblePlays[index].squares;
         }
-        let val = this.currentState.findChange(index);
-        console.log(val);
-        return val;
+        return null;
     }
 }
 export class Play {
     static X ='X';
     static O = 'O';
-    static TIE = '.';
+    static TIE = 'TIE';
     squares:[] = Array(9);
     possiblePlays:Play[]=[];
     value: number = 0;
     currentPlayer:String;
     nextPlayer:String;
-    findChange(index) :number{
-        console.log("finding the "+index);
-        for(let i=0; i<this.possiblePlays.length;i++) {
-            if(this.squares[i]!==this.possiblePlays[index][i]){
-                return i;
-            }
-        }
-        return -1;
-    }
     constructor(squares:String[], fillVal:String=Play.X) {
         this.squares = squares;
         this.currentPlayer = fillVal;

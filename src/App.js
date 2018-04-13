@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import './App.css';
 import {Minimax, Play} from './Minimax';
 
@@ -26,24 +26,31 @@ class App extends Component {
         }
         const history = this.state.history.slice(0, this.state.stepNumber + 1);
         const current = history[history.length - 1];
-        const squares = current.squares.slice();
+        let squares = current.squares.slice();
         if (Play.calculateWinner(squares) || squares[i]) {
             return;
         }
         squares[i] = this.state.xIsNext ? Play.X : Play.O;
+        let next = !this.state.xIsNext;
+        if (!next && !Play.end(squares)) {
+            squares = this.minimax.giveNext(squares);
+            next = !next;
+        }
         this.setState({
             history: history.concat([{
                 squares: squares
             }]),
             stepNumber: history.length,
-            xIsNext: !this.state.xIsNext,
+            xIsNext: next,
         });
         this.minimax.goTo(squares);
     }
+
     jumpTo(step) {
+        this.minimax = App.startMinimax(this.state.history[step].squares);
         this.setState({
             stepNumber: step,
-            xIsNext: (step % 2) === 0,
+            xIsNext: true,
         });
     }
     render() {
@@ -75,11 +82,7 @@ class App extends Component {
                           squares={current.squares}
                           onClick={(i) => {
                               this.handleClick(i);
-                              if(this.minimax.currentState.currentPlayer===Play.O) {
-                                  let val = this.minimax.giveNext();
-                                  console.log(this.minimax.giveNext())
-                                  this.handleClick(val);
-                              }
+
                           }}
                       />
                   </div>
