@@ -11,29 +11,7 @@ export class Minimax {
         this.currentState = state;
     }
     giveNext(squares): [] {
-        console.log(this.currentState);
-        this.goTo(squares);
-        console.log(this.currentState);
-        let index = -1;
-        let max = null;
-        if(this.currentState.possiblePlays.length>0){
-            for (let i = 0; i < this.currentState.possiblePlays.length; i++) {
-                if (Play.calculateWinner(this.currentState.possiblePlays[i].squares)) {
-                    return this.currentState.possiblePlays[i].squares;
-                }
-                if (!this.currentState.possiblePlays[i].nextLose()) {
-                    let val = this.currentState.possiblePlays[i].calculateValue();
-                    if (max === null || val > max) {
-                        max = val;
-                        index = i;
-                    }
-                }
-            }
-            console.log(index);
-            console.log(this.currentState.possiblePlays[index].squares);
-            return this.currentState.possiblePlays[index].squares;
-        }
-        return null;
+
     }
 }
 export class Play {
@@ -42,7 +20,6 @@ export class Play {
     static TIE = 'TIE';
     squares:[] = Array(9);
     possiblePlays:Play[]=[];
-    value: number = 0;
     currentPlayer:String;
     nextPlayer:String;
     constructor(squares:String[], fillVal:String=Play.X) {
@@ -59,23 +36,9 @@ export class Play {
     nextLose() {
         return this.possiblePlays.find(value => Play.calculateWinner(value.squares) === Play.X);
     }
-    calculateValue() {
-        let winner = Play.calculateWinner(this.squares);
-        if(winner===Play.O){
-            this.value = 1;
-            return 1;
-        }else if(winner===Play.X){
-            this.value = -1;
-            return -1;
-        }else if(winner===Play.TIE) {
-            return 1;
-        }else {
-            const val = this.possiblePlays
-                .map(value => value.calculateValue())
-                .reduce((previousValue, currentValue) => previousValue+currentValue);
-            this.value = val;
-            return val;
-        }
+
+    calculateValue(): { chancesWin: number, chancesLose: number } {
+
     }
     static calculateWinner(squares):string {
         const lines = [
