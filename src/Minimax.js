@@ -10,12 +10,10 @@ export class Minimax {
         }
         this.currentState = state;
     }
-
     giveNext(squares): [] {
         console.log(this.currentState);
         this.goTo(squares);
         console.log(this.currentState);
-        // console.log(this.currentState.possiblePlays);
         let index = -1;
         let max = null;
         if(this.currentState.possiblePlays.length>0){
@@ -23,10 +21,12 @@ export class Minimax {
                 if (Play.calculateWinner(this.currentState.possiblePlays[i].squares)) {
                     return this.currentState.possiblePlays[i].squares;
                 }
-                let val = this.currentState.possiblePlays[i].calculateValue();
-                if (max === null || val > max) {
-                    max = val;
-                    index = i;
+                if (!this.currentState.possiblePlays[i].nextLose()) {
+                    let val = this.currentState.possiblePlays[i].calculateValue();
+                    if (max === null || val > max) {
+                        max = val;
+                        index = i;
+                    }
                 }
             }
             console.log(index);
@@ -54,6 +54,10 @@ export class Play {
             this.nextPlayer = Play.X;
         }
         this.possiblePlays = this.buildPossiblePlays();
+    }
+
+    nextLose() {
+        return this.possiblePlays.find(value => Play.calculateWinner(value.squares) === Play.X);
     }
     calculateValue() {
         let winner = Play.calculateWinner(this.squares);
