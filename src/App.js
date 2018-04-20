@@ -94,6 +94,10 @@ export default class App extends Component {
         );
     }
 
+    static compare(predictedMoveValue, bestMoveValue, maxScore) {
+        return maxScore ? predictedMoveValue > bestMoveValue : predictedMoveValue < bestMoveValue;
+    }
+
     findAiMove(board) {
         let bestMoveScore = 100;
         let move = null;
@@ -103,7 +107,7 @@ export default class App extends Component {
         for (let i = 0; i < board.length; i++) {
             let newBoard = App.validMove(i, this.state.minPlayer, board);
             if (newBoard) {
-                let moveScore = this.maxScore(newBoard);
+                let moveScore = this.giveScore(newBoard);
                 if (moveScore < bestMoveScore) {
                     bestMoveScore = moveScore;
                     move = i;
@@ -113,7 +117,15 @@ export default class App extends Component {
         return move;
     }
 
-    maxScore(board) {
+    giveValues(maxScore) {
+        return {
+            bestMoveValue: maxScore ? -100 : 100,
+            player: maxScore ? this.state.maxPlayer : this.state.minPlayer
+        };
+    }
+
+    giveScore(board, maxScore = true) {
+        const values = this.giveValues(maxScore);
         const winner = App.calculateWinner(board);
         switch (winner) {
             case App.X:
@@ -123,12 +135,12 @@ export default class App extends Component {
             case App.TIE:
                 return 0;
             default:
-                let bestMoveValue = -100;
+                let bestMoveValue = values.bestMoveValue;
                 for (let i = 0; i < board.length; i++) {
-                    let newBoard = App.validMove(i, this.state.maxPlayer, board);
+                    let newBoard = App.validMove(i, values.player, board);
                     if (newBoard) {
-                        let predictedMoveValue = this.minScore(newBoard);
-                        if (predictedMoveValue > bestMoveValue) {
+                        let predictedMoveValue = this.giveScore(newBoard, !maxScore);
+                        if (App.compare(predictedMoveValue, bestMoveValue, maxScore)) {
                             bestMoveValue = predictedMoveValue;
                         }
                     }
@@ -137,65 +149,31 @@ export default class App extends Component {
         }
     }
 
-    minScore(board) {
-        const winner = App.calculateWinner(board);
-        switch (winner) {
-            case App.X:
-                return 10;
-            case App.O:
-                return -10;
-            case App.TIE:
-                return 0;
-            default:
-                let bestMoveValue = 100;
-                for (let i = 0; i < board.length; i++) {
-                    let newBoard = App.validMove(i, this.state.minPlayer, board);
-                    if (newBoard) {
-                        let predictedMoveValue = this.maxScore(newBoard);
-                        if (predictedMoveValue < bestMoveValue) {
-                            bestMoveValue = predictedMoveValue;
-                        }
-                    }
-                }
-                return bestMoveValue;
-        }
-    }
-
-    gameLoop(move) {
-        let player = this.state.turn;
-        let currentGameBoard = App.validMove(move, player, this.state.gameBoard);
+    changeWinner(player, currentGameBoard) {
         let winner = App.calculateWinner(currentGameBoard);
         if (winner === player) {
             this.setState({
                 gameBoard: currentGameBoard,
                 winner: player
             });
-            return;
+            return true;
         }
         if (winner === App.TIE) {
             this.setState({
                 gameBoard: currentGameBoard,
                 winner: App.TIE
             });
-            return;
+            return true;
         }
+        return false;
+    }
+    gameLoop(move) {
+        let player = this.state.turn;
+        let currentGameBoard = App.validMove(move, player, this.state.gameBoard);
+        if (this.changeWinner(player, currentGameBoard)) return;
         player = App.O;
         currentGameBoard = App.validMove(this.findAiMove(currentGameBoard), player, currentGameBoard);
-        winner = App.calculateWinner(currentGameBoard);
-        if (winner === player) {
-            this.setState({
-                gameBoard: currentGameBoard,
-                winner: player
-            });
-            return;
-        }
-        if (winner === App.TIE) {
-            this.setState({
-                gameBoard: currentGameBoard,
-                winner: App.TIE
-            });
-            return;
-        }
+        if (this.changeWinner(player, currentGameBoard)) return;
         this.setState({
             gameBoard: currentGameBoard
         });
