@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import './ResetButton.css';
 
 export class ResetButton extends Component {
     static resetClick(props) {

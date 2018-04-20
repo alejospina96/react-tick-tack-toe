@@ -78,18 +78,20 @@ export default class App extends Component {
                 <div className="menu">
                     <h1>Minimax Algorithm - Tic Tac Toe</h1>
                     <Announcement winner={this.state.winner}/>
-                    <ResetButton reset={this.resetBoard.bind(this)}/>
                 </div>
-                {this.state.gameBoard.map((value, index) => {
-                    return (
-                        <Tile
-                            key={index}
-                            loc={index}
-                            value={value}
-                            gameLoop={this.gameLoop.bind(this)}
-                        />
-                    );
-                })}
+                <div className="board">
+                    {this.state.gameBoard.map((value, index) => {
+                        return (
+                            <Tile
+                                key={index}
+                                loc={index}
+                                value={value}
+                                gameLoop={this.gameLoop.bind(this)}
+                            />
+                        );
+                    })}
+                </div>
+                <ResetButton reset={this.resetBoard.bind(this)}/>
             </div>
         );
     }

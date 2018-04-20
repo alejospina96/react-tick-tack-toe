@@ -1,0 +1,11 @@
+button {
+    width: 75.8%;
+    height: 50px;
+    cursor: pointer;
+    background-color: #0d47a1;
+    color: #ffffff;
+    font-weight: bold;
+    font-size: 26px;
+    font-family: sans-serif;
+    font-variant: all-small-caps;
+}

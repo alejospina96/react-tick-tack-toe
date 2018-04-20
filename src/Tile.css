@@ -1,12 +1,14 @@
 .tile {
-    width: 30%;
+    width: 25%;
     height: 150px;
     font-size: 60px;
-    border: 8px solid darkgrey;
+    font-weight: bold;
+    border: 1px solid #999;
     display: inline-block;
     float: left;
     text-align: center;
     line-height: 150px;
+    cursor: pointer;
 }
 
 p {
