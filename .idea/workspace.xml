@@ -1,13 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="24315131-5932-4c78-90de-a81bf1033eb0" name="Default" comment="Style">
-      <change afterPath="$PROJECT_DIR$/src/ResetButton.css" afterDir="false" />
+    <list default="true" id="24315131-5932-4c78-90de-a81bf1033eb0" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/App.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ResetButton.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/ResetButton.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Tile.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/Tile.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ResetButton.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/ResetButton.css" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -25,7 +21,7 @@
         <entry file="file://$PROJECT_DIR$/src/App.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="552">
-              <caret line="93" column="65" selection-start-line="93" selection-start-column="65" selection-end-line="93" selection-end-column="65" />
+              <caret line="93" column="22" lean-forward="true" selection-start-line="93" selection-start-column="22" selection-end-line="93" selection-end-column="22" />
               <folding>
                 <element signature="e#0#39#0" expanded="true" />
               </folding>
@@ -37,7 +33,7 @@
         <entry file="file://$PROJECT_DIR$/src/App.css">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="138">
-              <caret line="6" column="1" lean-forward="true" selection-start-line="6" selection-start-column="1" selection-end-line="6" selection-end-column="1" />
+              <caret line="7" column="1" lean-forward="true" selection-start-line="7" selection-start-column="1" selection-end-line="7" selection-end-column="1" />
             </state>
           </provider>
         </entry>
@@ -45,8 +41,11 @@
       <file leaf-file-name="ResetButton.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/ResetButton.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="23">
-              <caret line="1" column="21" selection-start-line="1" selection-start-column="21" selection-end-line="1" selection-end-column="21" />
+            <state relative-caret-position="69">
+              <caret line="3" column="13" selection-start-line="3" selection-start-column="13" selection-end-line="3" selection-end-column="13" />
+              <folding>
+                <element signature="e#0#39#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -54,8 +53,8 @@
       <file leaf-file-name="ResetButton.css" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/ResetButton.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="115">
-              <caret line="5" column="19" selection-start-line="5" selection-start-column="19" selection-end-line="5" selection-end-column="19" />
+            <state relative-caret-position="276">
+              <caret line="12" column="70" selection-start-line="12" selection-start-column="70" selection-end-line="12" selection-end-column="70" />
             </state>
           </provider>
         </entry>
@@ -126,8 +125,8 @@
         <option value="$PROJECT_DIR$/src/Tile.js" />
         <option value="$PROJECT_DIR$/src/Tile.css" />
         <option value="$PROJECT_DIR$/src/ResetButton.js" />
-        <option value="$PROJECT_DIR$/src/App.js" />
         <option value="$PROJECT_DIR$/src/App.css" />
+        <option value="$PROJECT_DIR$/src/App.js" />
         <option value="$PROJECT_DIR$/src/ResetButton.css" />
       </list>
     </option>
@@ -272,11 +271,25 @@
       <option name="project" value="LOCAL" />
       <updated>1523663940992</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="Style game board">
+      <created>1524188295638</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1524188295638</updated>
+    </task>
+    <task id="LOCAL-00008" summary="Style game board">
+      <created>1524188350064</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1524188350064</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="68943000" />
+    <option name="totallyTimeSpent" value="69120000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="1920" y="113" width="1440" height="869" extended-state="6" />
@@ -334,7 +347,8 @@
     <MESSAGE value="Fix bug on play" />
     <MESSAGE value="Style buttons" />
     <MESSAGE value="Feat full functional tic tac toe game" />
-    <option name="LAST_COMMIT_MESSAGE" value="Feat full functional tic tac toe game" />
+    <MESSAGE value="Style game board" />
+    <option name="LAST_COMMIT_MESSAGE" value="Style game board" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
@@ -599,13 +613,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Tile.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="253">
-          <caret line="11" column="1" lean-forward="true" selection-start-line="11" selection-start-column="1" selection-end-line="11" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Tile.js">
       <provider selected="true" editor-type-id="text-editor">
         <state>
@@ -613,34 +620,44 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/App.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="138">
+          <caret line="7" column="1" lean-forward="true" selection-start-line="7" selection-start-column="1" selection-end-line="7" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Tile.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="253">
+          <caret line="11" column="1" lean-forward="true" selection-start-line="11" selection-start-column="1" selection-end-line="11" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/App.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="552">
-          <caret line="93" column="65" selection-start-line="93" selection-start-column="65" selection-end-line="93" selection-end-column="65" />
+          <caret line="93" column="22" lean-forward="true" selection-start-line="93" selection-start-column="22" selection-end-line="93" selection-end-column="22" />
           <folding>
             <element signature="e#0#39#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/App.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="138">
-          <caret line="6" column="1" lean-forward="true" selection-start-line="6" selection-start-column="1" selection-end-line="6" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/ResetButton.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="23">
-          <caret line="1" column="21" selection-start-line="1" selection-start-column="21" selection-end-line="1" selection-end-column="21" />
+        <state relative-caret-position="69">
+          <caret line="3" column="13" selection-start-line="3" selection-start-column="13" selection-end-line="3" selection-end-column="13" />
+          <folding>
+            <element signature="e#0#39#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/ResetButton.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="115">
-          <caret line="5" column="19" selection-start-line="5" selection-start-column="19" selection-end-line="5" selection-end-column="19" />
+        <state relative-caret-position="276">
+          <caret line="12" column="70" selection-start-line="12" selection-start-column="70" selection-end-line="12" selection-end-column="70" />
         </state>
       </provider>
     </entry>
